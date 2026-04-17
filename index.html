@@ -222,7 +222,11 @@
       })
         .then((message) => {
           console.log(message);
-          $("#amount_text").text(amount);
+          const converted_amount = parseFloat(amount).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD"
+          });
+          $("#amount_text").text(converted_amount);
           $("#fullname_text").text(fullname);
           $("#bank_name_text").text(bank_name);
           $("#transaction_id_text").text(transaction_id);
