@@ -182,7 +182,7 @@
   $(document).ready(() => {
     // $("#exampleModal").modal("show");
 
-    $("#checkoutForm").submit((e) => {
+    $("#checkoutForm").on( 'submit', (e) => {
       e.preventDefault();
       data = new FormData(this);
       // const data = {
