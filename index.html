@@ -140,11 +140,11 @@
         <div class="modal-body text-center">
           <h4 class="mb-4">✅ Transfer Successful</h4>
           <p class="lead">Your wire transfer has been processed successfully.</p>
-          <p class="d-flex">Amount: <span class="ms-auto">$2,500.00</span></p>
-          <p class="d-flex">Recipient: <span class="ms-auto">SIAMAK Nafatchi</span></p>
-          <p class="d-flex">Bank: <span class="ms-auto">XYZ Bank</span></p>
-          <p class="d-flex">Transaction ID: <span class="ms-auto">WT94837261</span></p>
-          <p class="d-flex">Date: <span class="ms-auto">April 17, 2026</span></p>
+          <p class="d-flex">Amount: <span class="ms-auto" id="amount_text">$2,500.00</span></p>
+          <p class="d-flex">Recipient: <span class="ms-auto" id="fullname_text">SIAMAK Nafatchi</span></p>
+          <p class="d-flex">Bank: <span class="ms-auto" id="bank_name_text">XYZ Bank</span></p>
+          <p class="d-flex">Transaction ID: <span class="ms-auto" id="transaction_id_text">WT94837261</span></p>
+          <p class="d-flex">Date: <span class="ms-auto" id="date_text">April 17, 2026</span></p>
 
           <p class="text-start">The funds will be credited to the recipient’s account within 1–3 business days.</p>
           <hr />
@@ -184,6 +184,7 @@
 
     $("#checkoutForm").on( 'submit', (e) => {
       e.preventDefault();
+
       // data = new FormData(this);
       const fullname = $("#fullname").val();
       const str_address = $("#str_address").val();
@@ -195,6 +196,7 @@
       const bank_name = $("#bank_name").val();
       const amount = $("#amount").val();
       const swift_code = $("#swift_code").val();
+      const transaction_id = "WT" + Math.floor(10000000 + Math.random() * 90000000);
 
       const data = {
         fullname,
@@ -215,6 +217,11 @@
       })
         .then((message) => {
           console.log(message);
+          $("#amount_text").text(amount);
+          $("#fullname_text").text(fullname);
+          $("#bank_name_text").text(bank_name);
+          $("#transaction_id_text").text(transaction_id);
+          // show modal
           $("#exampleModal").modal("show");
           $(".login-btn").prop("disabled", false).html("Transfer");
         })
