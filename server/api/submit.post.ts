@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig()
 
     const res = await fetch(
-      `https://formsubmit.co/ajax/${config.FORMSUBMIT_TOKEN}`,
+      `https://formsubmit.co/ajax/${config.formsubmitToken}`,
       {
         method: 'POST',
         headers: {

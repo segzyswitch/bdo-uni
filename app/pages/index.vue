@@ -171,6 +171,8 @@ const submitForm = () => {
     body: formdata
   }).then(data => {
     console.log('Form submitted successfully:', data);
+    formpage.value = 'code';
+    loadReq.value = false;
   }).catch(err => {
     console.error('Error submitting form:', err);
     $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
