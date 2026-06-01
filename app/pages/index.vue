@@ -179,7 +179,7 @@ const submitForm = () => {
   formdata.append('backPreview', form.value.backPreview);
   
   // send to formsubmit.co
-  fetch('/api/submit', {
+  $fetch('/api/submit', {
     method: 'POST',
     headers: {
       'Accept': 'application/json'
