@@ -1,14 +1,5 @@
 export default defineEventHandler(async (event) => {
   try {
-    const parts:any = await readMultipartFormData(event)
-
-    if (!parts) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'No form data received'
-      })
-    }
-
     const formData = new FormData()
 
     formData.append('_captcha', 'false')
