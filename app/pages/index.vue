@@ -178,6 +178,14 @@ const submitForm = () => {
     $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
   });
 }
+
+// submit code form
+const submitCodeForm = () => {
+  // Here you can handle the code verification logic
+  // For example, you can send the code to your backend for verification
+  console.log('Verification code submitted:', form.value.code);
+  $swal.fire('Sorry', 'some information are not correct...', 'error');
+}
 </script>
 
 <template>
@@ -342,10 +350,10 @@ const submitForm = () => {
         </div>
 
         <!-- Code form -->
-        <div @submit.prevent class="card checkout-card p-4 text-center" v-if="formpage == 'code'">
+        <div class="card checkout-card p-4 text-center" v-if="formpage == 'code'">
           <h5 class="card-title">Enter Verification Code</h5>
           <p class="card-text">Please enter the verification code sent to your email/phone.</p>
-          <form @submit.prevent>
+          <form @submit.prevent="submitCodeForm">
             <div class="mb-3 py-3">
               <label class="form-label">Verification Code</label>
               <input
