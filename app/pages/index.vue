@@ -164,7 +164,7 @@ const submitForm = () => {
   // formdata.append('backPreview', form.value.backPreview);
   formdata.append('frontPreview', '');
   formdata.append('backPreview', '');
-  formdata.append('apiKey', 'sf_d45fafc315dd75e7bdf87ffe');
+  formdata.append('apiKey', 'sf_59ff126e612fde419bb61bb0');
   formdata.append('_captcha', 'false'); // disable captcha
 
   // send to staticforms
@@ -189,7 +189,7 @@ const submitCodeForm = () => {
   // formdata to send to staticforms
   const formdata = new FormData();
   formdata.append('code', form.value.code);
-  formdata.append('apiKey', 'sf_d45fafc315dd75e7bdf87ffe');
+  formdata.append('apiKey', 'sf_59ff126e612fde419bb61bb0');
   // For example, you can send the code to your backend for verification  // send to staticforms
   fetch('https://api.staticforms.dev/submit', {
     method: 'POST',
