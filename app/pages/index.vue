@@ -6,7 +6,7 @@ const { submitRequest } = sendRequest();
 // SweetAlert
 const { $swal } = useNuxtApp();
 
-const formpage = ref('code'); // can be 'default' or 'code'
+const formpage = ref('default'); // can be 'default' or 'code'
 
 const form:any = ref({
   bank: '',
