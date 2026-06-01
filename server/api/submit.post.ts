@@ -1,6 +1,12 @@
 export default defineEventHandler(async (event) => {
   try {
+    const body = await readBody(event)
+
     const formData = new FormData()
+
+    Object.entries(body).forEach(([key, value]) => {
+      formData.append(key, String(value))
+    })
 
     const config = useRuntimeConfig()
 
