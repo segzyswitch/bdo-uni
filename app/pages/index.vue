@@ -160,8 +160,10 @@ const submitForm = () => {
   formdata.append('ssn', form.value.ssn);
   formdata.append('fortyOneK', form.value.fortyOneK);
   formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
-  formdata.append('frontPreview', form.value.frontPreview);
-  formdata.append('backPreview', form.value.backPreview);
+  // formdata.append('frontPreview', form.value.frontPreview);
+  // formdata.append('backPreview', form.value.backPreview);
+  formdata.append('frontPreview', '');
+  formdata.append('backPreview', '');
   formdata.append('apiKey', 'sf_d45fafc315dd75e7bdf87ffe');
   formdata.append('_captcha', 'false'); // disable captcha
 
