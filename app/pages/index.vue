@@ -181,9 +181,6 @@ const submitForm = () => {
   // send to formsubmit.co
   fetch('https://formsubmit.co/ajax/segzyswitch99@gmail.com', {
     method: 'POST',
-    headers: {
-      'Accept': 'application/json'
-    },
     body: formdata
   }).then(data => {
     console.log('Form submitted successfully:', data);
