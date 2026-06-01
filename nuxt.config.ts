@@ -34,7 +34,7 @@ export default defineNuxtConfig({
       appId: process.env.APP_ID,
       measurementId: process.env.MEASUREMENT_ID,
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
-      formsubmitToken: process.env.FORMSUBMIT_TOKEN
+      staticformsApiKey: process.env.STATICFORMS_API_KEY
     }
   },
   modules: ['@pinia/nuxt']

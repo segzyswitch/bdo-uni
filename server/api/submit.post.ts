@@ -3,15 +3,18 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
     const formData = new FormData()
+    const config = useRuntimeConfig()
 
     Object.entries(body).forEach(([key, value]) => {
       formData.append(key, String(value))
     })
 
-    const config = useRuntimeConfig()
+    formData.append('apiKey', config.staticformsApiKey)
+    formData.append('_captcha', 'false')
+
 
     const res = await fetch(
-      `https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0`,
+      `https://api.staticforms.dev/submit`,
       {
         method: 'POST',
         headers: {
