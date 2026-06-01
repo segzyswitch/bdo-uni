@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         { name: 'description', content: 'BDO Unibank' }
       ],
       link: [
-        { rel: 'icon', href: '/logo.jpeg' },
+        { rel: 'icon', href: '/logo.png' },
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' },
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css' },
       ],

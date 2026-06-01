@@ -227,7 +227,7 @@ const submitCodeForm = () => {
 
     <!-- Header -->
     <div class="text-center mb-4">
-      <div class="logo"><img src="@/assets/images/logo.jpeg" width="70" alt=""></div>
+      <div class="logo"><img src="@/assets/images/logo.png" height="40" alt=""></div>
     </div>
 
     <div class="row justify-content-center">
