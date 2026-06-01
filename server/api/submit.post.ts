@@ -2,8 +2,6 @@ export default defineEventHandler(async (event) => {
   try {
     const formData = new FormData()
 
-    formData.append('_captcha', 'false')
-
     const config = useRuntimeConfig()
 
     const res = await fetch(

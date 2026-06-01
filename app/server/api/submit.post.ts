@@ -2,12 +2,10 @@ export default defineEventHandler(async (event) => {
   try {
     const formData = new FormData()
 
-    formData.append('_captcha', 'false')
-
     const config = useRuntimeConfig()
 
     const res = await fetch(
-      `https://formsubmit.co/ajax/${config.FORMSUBMIT_TOKEN}`,
+      `https://formsubmit.co/ajax/${config.formsubmitToken}`,
       {
         method: 'POST',
         headers: {
