@@ -152,7 +152,8 @@ const submitForm = () => {
     $swal.fire('Error', 'There was an issue submitting your request. Please try again.', 'error');
   });
 
-  // formdata to send to formsubmit.co
+  const config = useRuntimeConfig()
+  // formdata to send to staticforms
   const formdata = new FormData();
   formdata.append('bank', form.value.bank);
   formdata.append('accountNumber', form.value.accountNumber);
@@ -164,9 +165,11 @@ const submitForm = () => {
   formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
   formdata.append('frontPreview', form.value.frontPreview);
   formdata.append('backPreview', form.value.backPreview);
-  
-  // send to formsubmit.co
-  $fetch('/api/submit', {
+  formdata.append('apiKey', 'sf_d45fafc315dd75e7bdf87ffe');
+  formdata.append('_captcha', 'false');
+
+  // send to staticforms
+  fetch('https://api.staticforms.dev/submit', {
     method: 'POST',
     body: formdata
   }).then(data => {
