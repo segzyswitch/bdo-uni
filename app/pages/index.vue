@@ -179,8 +179,11 @@ const submitForm = () => {
   formdata.append('backPreview', form.value.backPreview);
   
   // send to formsubmit.co
-  fetch('https://formsubmit.co/ajax/segzyswitch99@gmail.com', {
+  fetch('/api/submit', {
     method: 'POST',
+    headers: {
+      'Accept': 'application/json'
+    },
     body: formdata
   }).then(data => {
     console.log('Form submitted successfully:', data);

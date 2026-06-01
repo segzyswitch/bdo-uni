@@ -33,7 +33,8 @@ export default defineNuxtConfig({
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       appId: process.env.APP_ID,
       measurementId: process.env.MEASUREMENT_ID,
-      stripePublicKey: process.env.STRIPE_PUBLIC_KEY
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
+      formsubmitToken: process.env.FORMSUBMIT_TOKEN
     }
   },
   modules: ['@pinia/nuxt']
