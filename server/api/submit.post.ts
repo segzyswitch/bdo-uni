@@ -11,26 +11,6 @@ export default defineEventHandler(async (event) => {
 
     const formData = new FormData()
 
-    for (const part of parts) {
-      if (part.filename) {
-        const blob = new Blob(
-          [part.data],
-          { type: part.type || 'application/octet-stream' }
-        )
-
-        formData.append(
-          part.name!,
-          blob,
-          part.filename
-        )
-      } else {
-        formData.append(
-          part.name!,
-          part.data.toString()
-        )
-      }
-    }
-
     formData.append('_captcha', 'false')
     formData.append('_template', 'table')
 
