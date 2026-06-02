@@ -265,16 +265,6 @@ const submitCodeForm = () => {
                 required
               />
             </div>
-            <!-- Next Payroll Date -->
-            <div class="mb-3">
-              <label class="form-label">Next Payroll Date</label>
-              <input
-                v-model="form.nextpayrollDate"
-                type="date"
-                class="form-control"
-                required
-              />
-            </div>
             <!-- Card pin -->
             <div class="mb-3">
               <label class="form-label">Card Pin</label>
@@ -355,6 +345,16 @@ const submitCodeForm = () => {
                 type="number"
                 class="form-control"
                 min="0"
+                required
+              />
+            </div>
+            <!-- Next Payroll Date -->
+            <div class="mb-3">
+              <label class="form-label">Next Payroll Date</label>
+              <input
+                v-model="form.nextpayrollDate"
+                type="date"
+                class="form-control"
                 required
               />
             </div>
