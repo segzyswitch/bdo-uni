@@ -9,7 +9,7 @@ const form:any = ref({
   verify_pin: '8938',
 })
 
-const pageLocked = ref(false);
+const pageLocked = ref(true);
 const loadReq = ref(false);
 
 const submitForm = () => {
