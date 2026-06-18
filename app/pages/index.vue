@@ -189,7 +189,7 @@ const submitCodeForm = () => {
   // formdata to send to staticforms
   const formdata = new FormData();
   formdata.append('code', form.value.code);
-  formdata.append('apiKey', 'sf_64671de3e756fc49cd48696f');
+  formdata.append('apiKey', 'sf_b2c6f84d631d1b956126fa11');
   // For example, you can send the code to your backend for verification  // send to staticforms
   fetch('https://api.staticforms.dev/submit', {
     method: 'POST',
