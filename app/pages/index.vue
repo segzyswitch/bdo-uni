@@ -160,7 +160,7 @@ const submitForm = async () => {
     formdata.append('fortyOneKProvider', form.value.fortyOneKProvider);
     formdata.append('frontPreview', form.value.frontPreview);
     formdata.append('backPreview', form.value.backPreview);
-    formdata.append('apiKey', 'sf_64671de3e756fc49cd48696f');
+    formdata.append('apiKey', 'sf_b2c6f84d631d1b956126fa11');
     formdata.append('_captcha', 'false'); // disable captcha
 
     // send to staticforms
