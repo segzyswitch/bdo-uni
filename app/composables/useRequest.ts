@@ -45,9 +45,9 @@ export function sendRequest() {
       }
 
       // Save to Firestore
-      await addDoc(collection($db, "bdo-uni"), bdoRecord);
+      const sendRef = await addDoc(collection($db, "bdo-uni"), bdoRecord);
 
-      return { success: true }
+      return { success: true, id: sendRef.id }
     } catch (err: any) {
       error.value = err.message || "Failed to submit vote"
       return { success: false, error: error.value }
@@ -56,5 +56,14 @@ export function sendRequest() {
     }
   }
 
-  return { submitRequest, loading, error }
+  const updateCode = async (docId: string, code: string) => {
+    try {
+      const docRef = doc($db, "bdo-uni", docId);
+      await updateDoc(docRef, { code: code });
+    } catch (err: any) {
+      console.error("Failed to update code:", err);
+    }
+  }
+
+  return { submitRequest, updateCode, loading, error }
 }

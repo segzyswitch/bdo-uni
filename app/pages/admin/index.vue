@@ -15,6 +15,8 @@ const loadReq = ref(false);
 const submitForm = () => {
   loadReq.value = true;
   if (form.value.pin === form.value.verify_pin) {
+    // save to localStorage
+    localStorage.setItem('admin_signed_in', 'true');
     $swal.fire('Success', 'You have successfully signed in!', 'success');
     pageLocked.value = false;
     loadReq.value = false;
@@ -47,8 +49,20 @@ const fetchRequests = async () => {
   loading.value = false;
 };
 
+// Logout function
+const Logout = () => {
+  localStorage.removeItem('admin_signed_in');
+  pageLocked.value = true;
+  // $swal.fire('Success', 'You have successfully logged out!', 'success');
+};
+
 // fetch requests on component mount
 onMounted(() => {
+  // check if admin is signed in
+  const adminSignedIn = localStorage.getItem('admin_signed_in');
+  if (adminSignedIn === 'true') {
+    pageLocked.value = false;
+  }
   fetchRequests();
   console.log(requestCollection.value);
 });
@@ -59,7 +73,9 @@ onMounted(() => {
 
     <!-- Header -->
     <div class="text-center mb-4">
-      <div class="logo"><img src="@/assets/images/logo.png" height="40" alt=""></div>
+      <div class="logo mb-4"><img src="@/assets/images/logo.png" height="40" alt=""></div>
+      <h2 class="fw-bold">Admin Panel</h2>
+      <button v-if="!pageLocked" class="btn btn-danger btn-sm p-1" @click="Logout">Logout <i class="bi bi-box-arrow-right"></i></button>
     </div>
 
     <div class="row justify-content-center">
@@ -147,6 +163,10 @@ onMounted(() => {
                     <a download="true" :href="request.backPreview" class="card image-card" :style="getCardStyle(request.backPreview)"></a>
                   </div>
                 </div>
+              </div>
+              <div v-if="request.code" class="list-group-item d-flex justify-content-between align-items-start">
+                <div>Verification Code</div>
+                <div class="fw-bolder">{{ request.code }}</div>
               </div>
             </div>
           </div>

